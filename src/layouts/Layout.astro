@@ -1,0 +1,70 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+export interface Props {
+    title?: string;
+}
+
+const {title} = Astro.props as Props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Astro Crash Course - {title}</title>
+
+</head>
+<body>
+    <Header />
+    <slot />
+    <Footer />
+
+
+<!-- ***** VIEWPORT ***** -->
+<script>
+    //  When page loads call page load function
+    window.addEventListener('load', viewPortFunction);
+    //  Page load function
+    function viewPortFunction() {
+        //  Create the element on the page
+        const sizeDiv = document.createElement("div");
+        //  Add a id to the element so that we can style the element
+        sizeDiv.setAttribute("id", "viewPort");
+        //  Style the viewPort element
+        sizeDiv.style.position = 'fixed';
+        sizeDiv.style.bottom = '0';
+        sizeDiv.style.right = '0';
+        sizeDiv.style.padding = '10px 10px 7px 10px';
+        sizeDiv.style.opacity = '0.4';
+        sizeDiv.style.backgroundColor = '#000000';
+        sizeDiv.style.fontFamily = 'sans-serif';
+        sizeDiv.style.fontSize = '1rem';
+        sizeDiv.style.color = '#ffffff';
+        sizeDiv.style.zIndex = '999999999';
+        //  Display the element on the page
+        document.body.appendChild(sizeDiv);
+        //  Add the page width and height to the element
+        sizeDiv.append(window.innerWidth + ' x ' + window.innerHeight);
+    }
+
+    //  When page is resized call the page resize function
+    window.addEventListener('resize', resizeFunction);
+    //  Page resize function
+    function resizeFunction() {
+        //  Get the viewPort div element
+        const viewPort = document.querySelector('#viewPort');
+        //  Update the viewPort size values
+        viewPort.innerHTML = window.innerWidth + ' x ' + window.innerHeight;
+    }
+</script>
+<!-- ***** VIEWPORT ***** -->    
+</body>
+</html>
